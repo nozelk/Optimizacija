@@ -1,0 +1,249 @@
+/* Quiet reading layout for the concise oral exam syllabus. */
+.oral-page { --oral-accent: #d3e9a4; --oral-text: #eceee6; --oral-muted: #a9b1a6; color: var(--oral-text); }
+.oral-page [hidden] { display: none !important; }
+body:has(.oral-page) { background: #101410; }
+body:has(.oral-page) .sidebar { background: #101510; border-color: #293126; }
+body:has(.oral-page) .topbar { background: #101410; border-color: #293126; }
+body:has(.oral-page) #view { max-width: 1480px; padding-top: 44px; }
+body:has(.oral-page) #view.view-enter { animation: none; }
+.oral-page a { text-decoration: none; }
+.oral-page a:focus-visible, .oral-page button:focus-visible, .oral-page summary:focus-visible { outline: 2px solid var(--oral-accent); outline-offset: 5px; }
+.oral-kicker { color: var(--oral-muted); font: 10px/1.5 var(--mono); letter-spacing: .14em; }
+.oral-index-head { display: grid; grid-template-columns: minmax(0, 1fr) 230px; gap: 50px; align-items: center; padding-bottom: 38px; border-bottom: 1px solid var(--line); }
+.oral-index h1 { margin: 14px 0 17px; font: 500 clamp(38px, 4.6vw, 66px)/1.05 var(--display); letter-spacing: -.04em; }
+.oral-index h1 em { color: var(--oral-accent); font-weight: 400; }
+.oral-index-head p { color: var(--oral-muted); font-size: 14px; line-height: 1.8; margin: 0; }
+.oral-start { display: inline-flex; align-items: center; gap: 28px; margin-top: 24px; padding: 12px 17px; background: var(--oral-accent); color: #182110; border: 1px solid var(--oral-accent); border-radius: 7px; font-size: 13px; font-weight: 650; }
+.oral-start:hover { background: #e3f5bd; }
+.oral-progress-card { padding: 22px 24px; border: 1px solid #37422f; border-radius: 10px; background: #161d14; }
+.oral-progress-card > span { font: 10px var(--mono); letter-spacing: .1em; color: var(--oral-muted); }
+.oral-progress-card > strong { display: block; margin-top: 14px; color: var(--oral-accent); font: 400 38px/1.2 var(--display); }
+.oral-progress-card p { margin: 5px 0 16px; font-size: 12px; }
+.oral-progress-card small { display: block; margin-top: 13px; font-size: 11px; color: var(--oral-muted); line-height: 1.7; }
+.oral-meter { height: 3px; background: #35402d; border-radius: 4px; overflow: hidden; }
+.oral-meter i { display: block; height: 100%; background: var(--oral-accent); transition: width .2s; }
+.oral-layout { display: grid; grid-template-columns: minmax(0, 1fr) 225px; gap: 42px; margin-top: 32px; }
+.oral-syllabus { min-width: 0; }
+.oral-list-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 18px; }
+.oral-list-heading h2 { font-size: 17px; letter-spacing: -.02em; margin: 0; font-weight: 550; }
+.oral-list-heading a { font-size: 11px; color: var(--oral-muted); text-decoration: underline; text-underline-offset: 4px; }
+.oral-filters { display: flex; gap: 5px; flex-wrap: wrap; }
+.oral-filters button { font-size: 11px; padding: 8px 11px; background: transparent; color: var(--oral-muted); border: 1px solid #323c2e; border-radius: 5px; cursor: pointer; }
+.oral-filters button[aria-pressed="true"] { background: #d3e9a4; border-color: #d3e9a4; color: #182110; }
+.oral-filter-count { color: var(--oral-muted); font-size: 11px; margin: 12px 0 24px; }
+.oral-group { margin: 0 0 25px; }
+.oral-group > h3 { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: #b2bdac; font-weight: 500; margin: 0; padding: 12px 0; border-bottom: 1px solid #3d4835; }
+.oral-group > h3 > span { color: #849078; font: 10px var(--mono); margin-right: 13px; }
+.oral-row { display: flex; align-items: center; gap: 11px; padding: 15px 8px 15px 0; border-bottom: 1px solid #283123; transition: background .15s; }
+.oral-row:hover { background: #1b2417; }
+.oral-number { width: 28px; flex: 0 0 28px; color: #92a283; font: 12px var(--mono); }
+.oral-row-copy { flex: 1; min-width: 0; }
+.oral-row-copy strong { display: block; font-size: 13px; font-weight: 500; line-height: 1.55; }
+.oral-row-copy small { display: block; margin-top: 4px; font-size: 10px; }
+.oral-asked { color: #c8b780; font-size: 11px; }
+.oral-asked::before { content: "•"; margin-right: 5px; }
+.oral-priority { flex-shrink: 0; display: inline-block; padding: 3px 7px; font: 9px/1.5 var(--font); border: 1px solid #384334; border-radius: 4px; color: #b4c0ab; white-space: nowrap; }
+.oral-priority.core { background: #26321d; border-color: #42532f; color: #d3e9a4; }
+.oral-priority.later { color: #a3aaa0; border-color: #343b31; background: transparent; }
+.oral-row-status { color: #d3e9a4; font-size: 10px; }
+.oral-row-arrow { color: #91a281; font-size: 15px; }
+.oral-row.is-known .oral-number { font-size: 0; }
+.oral-row.is-known .oral-number::after { content: "✓"; font-size: 15px; color: var(--oral-accent); }
+.oral-rail { border-left: 1px solid #303a2a; padding-left: 26px; }
+.oral-rail-intro h2 { font: 400 27px var(--display); margin: 12px 0; }
+.oral-rail-intro p, .oral-legend p, .oral-lesson-rail p { color: var(--oral-muted); font-size: 12px; line-height: 1.8; }
+.oral-learning-path { padding: 0 0 0 16px; margin: 24px 0 30px; }
+.oral-learning-path li { padding-left: 3px; margin: 0 0 14px; font-size: 11px; color: #879779; }
+.oral-learning-path a { color: #d7dfd0; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; font-size: 12px; }
+.oral-learning-path a:hover { color: var(--oral-accent); }
+.oral-legend { border-top: 1px solid #303a2a; padding-top: 18px; }
+.oral-legend h3, .oral-rail-sources h3 { font-size: 12px; font-weight: 500; margin: 0 0 15px; }
+.oral-legend small { color: var(--oral-muted); font-size: 11px; line-height: 1.8; display: block; }
+.oral-more-link { display: block; color: var(--oral-accent); font-size: 11px; margin-top: 25px; line-height: 1.7; }
+.oral-empty { color: var(--oral-muted); padding: 32px 0; font-size: 14px; }
+.oral-backbar { display: flex; align-items: center; gap: 20px; color: var(--oral-muted); font-size: 11px; margin-bottom: 32px; }
+.oral-backbar a { color: var(--oral-accent); }
+.oral-backbar span:last-child { margin-left: auto; font: 11px var(--mono); }
+.oral-meta { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.oral-lesson-head { border-bottom: 1px solid #374230; padding-bottom: 23px; margin-bottom: 27px; }
+.oral-lesson-head h1 { margin: 17px 0 12px; font: 400 clamp(27px, 3.3vw, 43px)/1.2 var(--display); letter-spacing: -.025em; max-width: 850px; text-wrap: balance; }
+.oral-question { margin: 0; color: var(--oral-muted); font-size: 13px; line-height: 1.8; }
+.oral-answer-layout { display: grid; grid-template-columns: minmax(0, 820px) 180px; gap: 38px; }
+.oral-sheet { min-width: 0; font-size: 14px; line-height: 1.85; }
+.oral-sheet h2 { font-size: 14px; font-weight: 600; margin: 0 0 13px; }
+.oral-sheet h2 > span { color: #90a67b; font: 10px var(--mono); margin-right: 9px; }
+.oral-sheet p { margin: 0 0 16px; }
+.oral-formula { background: #192015; border: 1px solid #39482d; border-left: 3px solid #9ab971; border-radius: 0 6px 6px 0; margin: 18px 0; padding: 19px 22px; overflow-x: auto; color: #eff4e6; }
+.oral-formula .katex-display { margin: 0; text-align: left; }
+.oral-formula .katex-display > .katex { text-align: left; }
+.oral-formula .math-display { margin: 0; overflow: visible; }
+.oral-formula .katex { font-size: 1.08em; }
+.oral-symbols { margin: 0 0 21px; font-size: 12px; display: flex; flex-wrap: wrap; gap: 14px 24px; }
+.oral-symbols > div { flex: 1 1 180px; min-width: 0; padding: 4px 0; }
+.oral-symbols dt { color: #dae8ca; max-width: 100%; }
+.oral-symbols dd { color: var(--oral-muted); margin: 6px 0 0; }
+.oral-symbols > .oral-symbol-wide { flex-basis: 100%; }
+.oral-solves { padding: 13px 0 0; border-top: 1px solid #293324; color: #c6d1bc; }
+.oral-solves strong { display: block; color: #e8eddf; font-weight: 550; font-size: 12px; margin-bottom: 4px; }
+.oral-section { margin-top: 27px; }
+.oral-know, .oral-algorithm { padding-left: 19px; margin: 0; }
+.oral-know li, .oral-algorithm li { margin: 0 0 9px; padding-left: 5px; }
+.oral-know li::marker { color: #9ab971; font-size: 11px; }
+.oral-algorithm li::marker { color: #bdd39e; font: 12px var(--mono); }
+.oral-know strong { font-weight: 600; color: #d5e6bb; }
+.oral-details { border-top: 1px solid #35402e; border-bottom: 1px solid #35402e; margin-top: 24px; }
+.oral-details + .oral-details { margin-top: 12px; }
+.oral-details summary { display: flex; align-items: center; justify-content: space-between; gap: 18px; cursor: pointer; list-style: none; padding: 15px 0; font-size: 13px; color: #d5e2c6; }
+.oral-details summary::-webkit-details-marker { display: none; }
+.oral-details summary small { display: block; color: #8d9b82; font: 9px/1.5 var(--mono); letter-spacing: .1em; margin-bottom: 4px; }
+.oral-details summary > span:last-child { font-size: 22px; font-weight: 300; color: #b3ca94; transition: transform .15s; }
+.oral-details[open] summary > span:last-child { transform: rotate(45deg); }
+.oral-details > div { padding: 0 4px 17px; font-size: 13px; }
+.oral-details ol { padding-left: 19px; margin: 0; }
+.oral-details li { padding-left: 4px; margin-bottom: 10px; }
+.oral-details li:last-child, .oral-details p:last-child { margin-bottom: 0; }
+.oral-recall { margin-top: 25px; border-left: 2px solid #798d60; padding: 0 0 0 15px; }
+.oral-recall p { font-size: 13px; color: #c4cfb9; margin: 6px 0 0; }
+.oral-self-check { margin-top: 30px; background: #192015; border: 1px solid #35442a; padding: 18px 20px; border-radius: 7px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px; }
+.oral-self-check h2 { font-size: 14px; margin: 0; }
+.oral-self-check p { color: var(--oral-muted); font-size: 11px; margin: 3px 0 0; }
+.oral-status-actions { display: flex; gap: 7px; }
+.oral-status-actions button, .oral-print { padding: 10px 13px; border: 1px solid #4c5d3e; background: transparent; color: #d3dfc3; border-radius: 5px; font-size: 11px; cursor: pointer; }
+.oral-status-actions button[data-oral-status="2"] { border-color: #94aa75; }
+.oral-status-actions button[aria-pressed="true"] { background: var(--oral-accent); border-color: var(--oral-accent); color: #15200d; }
+.oral-save-message { display: block; flex-basis: 100%; font-size: 11px; color: #c9dbb3; }
+.oral-save-message:empty { display: none; }
+.oral-page-turn { display: flex; justify-content: space-between; gap: 25px; margin-top: 27px; }
+.oral-page-turn a { max-width: 48%; color: #e0ead4; font-size: 12px; }
+.oral-page-turn a:last-child { text-align: right; }
+.oral-page-turn small { display: block; font: 9px/1.8 var(--mono); letter-spacing: .08em; color: #a0ad95; margin-bottom: 6px; }
+.oral-lesson-rail { border-left: 1px solid #303a2a; padding-left: 22px; }
+.oral-lesson-rail b { color: #ccddb6; font-weight: 400; margin-right: 6px; }
+.oral-rail-sources { margin-top: 25px; border-top: 1px solid #303a2a; padding-top: 20px; }
+.oral-rail-sources a { display: block; font-size: 11px; color: #bdcbb1; margin: 8px 0; overflow-wrap: anywhere; }
+.oral-rail-sources p { font-size: 11px; }
+.oral-print { margin-top: 21px; padding: 7px 10px; }
+.oral-plain { background: #1c2218; padding: 13px 16px; border-radius: 5px; margin: 18px 0; }
+.oral-plain > strong { color: #d3e9a4; font-size: 11px; font-weight: 550; }
+.oral-plain p { font-size: 13px; margin: 5px 0 0; color: #d5decb; }
+.oral-visual-details > div { padding: 0 0 17px; }
+.oral-visual-source { font: 10px var(--mono); margin: 0 0 15px !important; color: #aabc96; }
+.oral-visual-source a { text-decoration: underline; text-underline-offset: 4px; }
+.oral-visual-controls { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 0; border-top: 1px solid #35402e; scroll-margin-top: 85px; }
+.oral-visual-controls button { padding: 8px 11px; background: #242f1c; border: 1px solid #52633e; color: #d4e7b9; border-radius: 4px; font-size: 11px; cursor: pointer; }
+.oral-visual-controls button:disabled { opacity: .35; cursor: default; }
+.oral-visual-controls > span { font: 10px var(--mono); color: #a5b398; white-space: nowrap; }
+.oral-visual-stage > h3 { font-size: 14px; font-weight: 550; margin: 14px 0; }
+.oral-visual-stage > p { font-size: 12px; line-height: 1.85; }
+.oral-table-scroll { overflow-x: auto; margin: 15px 0; padding-bottom: 4px; }
+.oral-matrix { border-collapse: collapse; width: 100%; font: 13px/1.5 var(--mono); text-align: center; }
+.oral-matrix caption { text-align: left; font: 10px/1.6 var(--font); color: #a9b79e; caption-side: bottom; padding-top: 10px; }
+.oral-matrix th { color: #a9b79e; font: 10px/1.5 var(--font); font-weight: 450; padding: 10px 7px; }
+.oral-matrix td { position: relative; padding: 10px 8px; min-width: 43px; color: #cad3c2; border: 1px solid #2b3624; background: #151c11; }
+.oral-matrix th[scope="row"] { text-align: left; min-width: 54px; }
+.oral-matrix .is-zero { color: #e6f2cc; font-weight: 650; }
+.oral-matrix .cover-0 { color: #ffbfa9; background: #2b2018; }
+.oral-matrix .cover-1 { background: #293624; }
+.oral-matrix .cover-2 { color: #b4d5ff; background: #1b2c39; }
+.oral-matrix .cover-row::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 2px solid #879b69; }
+.oral-matrix .cover-column::after { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; border-left: 2px solid #879b69; }
+.oral-matrix td > span { position: relative; z-index: 1; background: inherit; padding: 3px; }
+.oral-matrix .covered-label { color: #e8edab; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+.oral-matrix .chosen-cell { color: #eaffca; background: #3a5227; border-color: #9ec96c; }
+.oral-matrix .chosen-cell span { border: 1px solid #b6df88; border-radius: 4px; padding: 4px; }
+.oral-matrix .chosen-cell b { font: 9px var(--font); margin-left: 4px; }
+.oral-matrix-legend, .oral-graph-legend { display: flex; flex-wrap: wrap; gap: 7px 17px; color: #afbda3; font-size: 10px; margin: 10px 0 17px; }
+.oral-matrix-legend > span::before { content: "■"; margin-right: 5px; }
+.oral-matrix-legend .uncovered-key { color: #ffbfa9; }
+.oral-matrix-legend .double-key { color: #b4d5ff; }
+.oral-visual-equation { overflow-x: auto; padding: 12px 3px; color: #d9e6cb; }
+.oral-visual-equation .katex { font-size: 1.03em; }
+.oral-visual-equation .katex-display { margin: 0; }
+.oral-source-correction { color: #a6b099; font-size: 10px !important; border-top: 1px solid #35402e; padding-top: 10px; }
+.oral-graph { width: 100%; max-width: 620px; height: auto; display: block; margin: 10px auto; background: #151b12; border-radius: 5px; }
+.oral-graph .graph-edge { stroke: #69755f; stroke-width: 2; }
+.oral-graph .matched-edge { stroke: #acd581; stroke-width: 5; }
+.oral-graph .path-edge { stroke: #f2b27a; stroke-width: 4; stroke-dasharray: 8 4; }
+.oral-graph .graph-node circle { stroke: #b5cda2; stroke-width: 2; fill: #1d2a16; }
+.oral-graph .graph-node text { fill: #e4efd9; text-anchor: middle; font: 14px var(--font); }
+.oral-graph .cover-node circle { fill: #d3e9a4; stroke: #ecffcb; stroke-width: 4; }
+.oral-graph .cover-node text { fill: #15220a; }
+.oral-graph .set-label { fill: #b4c9a0; font: 15px var(--mono); }
+.oral-graph-legend .matched-key { color: #b2d795; }
+.oral-graph-legend .path-key { color: #f2b27a; }
+.oral-graph .flow-links path { fill: none; stroke: #aac889; stroke-width: 2; }
+.oral-graph .flow-labels text { fill: #d3dfc8; font: 12px var(--mono); }
+.oral-graph .flow-balance text { fill: #d2e5b8; font: 13px var(--font); }
+.nav-secondary { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 12px; }
+.nav-label { color: var(--muted); font: 9px var(--mono); letter-spacing: .12em; margin: 8px 12px; }
+@media (max-width: 1180px) {
+  .oral-layout { grid-template-columns: minmax(0, 1fr); }
+  .oral-rail { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 30px; border-left: 0; border-top: 1px solid var(--line); padding: 24px 0 0; }
+  .oral-learning-path { grid-column: 1; }
+  .oral-legend { grid-column: 2; grid-row: 1 / 3; border: 0; padding: 0; }
+  .oral-answer-layout { grid-template-columns: minmax(0, 1fr); }
+  .oral-lesson-rail { border-left: 0; border-top: 1px solid #303a2a; padding: 20px 0; }
+  .oral-lesson-rail > .oral-kicker, .oral-lesson-rail > p { display: none; }
+  .oral-rail-sources { border: 0; padding: 0; margin: 0; }
+  .oral-rail-sources a { display: inline-block; margin-right: 15px; }
+  .oral-index-head { gap: 25px; grid-template-columns: minmax(0, 1fr) 190px; }
+  .oral-progress-card { padding: 20px; }
+}
+@media (max-width: 600px) {
+  body:has(.oral-page) #view { padding: 24px 18px 65px; }
+  .oral-index-head { grid-template-columns: minmax(0, 1fr); gap: 23px; padding-bottom: 27px; }
+  .oral-index h1 { font-size: 44px; }
+  .oral-index-head p { font-size: 13px; }
+  .oral-progress-card { padding: 15px 18px; display: grid; grid-template-columns: 1fr auto; gap: 6px 20px; }
+  .oral-progress-card > strong { grid-column: 2; grid-row: 1 / 3; margin: 0; align-self: center; font-size: 29px; }
+  .oral-progress-card > p { margin: 0; font-size: 11px; }
+  .oral-progress-card .oral-meter { grid-column: 1 / 3; margin-top: 7px; }
+  .oral-progress-card small { display: none; }
+  .oral-layout { margin-top: 23px; }
+  .oral-list-heading { align-items: baseline; }
+  .oral-list-heading h2 { font-size: 15px; }
+  .oral-list-heading a { font-size: 9px; white-space: nowrap; }
+  .oral-filters { gap: 6px; }
+  .oral-filters button { font-size: 10px; padding: 8px; }
+  .oral-row { display: grid; grid-template-columns: 23px minmax(0, 1fr) auto; gap: 4px 9px; padding: 12px 0; }
+  .oral-number { width: 23px; grid-column: 1; grid-row: 1 / 3; align-self: start; margin-top: 4px; }
+  .oral-row-copy { grid-column: 2; grid-row: 1; }
+  .oral-row-copy strong { font-size: 13px; }
+  .oral-row-copy small { font-size: 9px; }
+  .oral-row > .oral-priority { grid-column: 2; grid-row: 2; justify-self: start; font-size: 8px; padding: 1px 5px; }
+  .oral-row-arrow { grid-column: 3; grid-row: 1; }
+  .oral-row-status { grid-column: 3; grid-row: 2; }
+  .oral-rail { display: block; }
+  .oral-legend { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
+  .oral-backbar { gap: 10px; margin-bottom: 25px; }
+  .oral-backbar > span:not(:last-child) { display: none; }
+  .oral-lesson-head h1 { font-size: 31px; }
+  .oral-meta { gap: 8px; }
+  .oral-lesson-head .oral-kicker { font-size: 9px; }
+  .oral-sheet { font-size: 13px; line-height: 1.85; }
+  .oral-formula { padding: 16px 13px; font-size: 13px; }
+  .oral-symbols > div { display: block; padding: 7px 0; }
+  .oral-symbols { display: block; }
+  .oral-symbols dd { margin-top: 3px; }
+  .oral-self-check { padding: 17px; }
+  .oral-status-actions { width: 100%; margin-top: 4px; }
+  .oral-status-actions button { flex: 1; min-height: 43px; }
+  .oral-page-turn a { font-size: 11px; }
+}
+@media print {
+  body:has(.oral-page) { background: white !important; color: #111 !important; }
+  .oral-page { --oral-text: #111; --oral-muted: #333; --oral-accent: #222; }
+  .oral-backbar, .oral-lesson-rail, .oral-self-check, .oral-page-turn, .oral-rail, .oral-filters, .oral-start { display: none !important; }
+  .oral-answer-layout, .oral-layout { display: block; }
+  .oral-sheet, .oral-question, .oral-symbols dd, .oral-solves, .oral-solves strong, .oral-details summary, .oral-recall p, .oral-know strong { color: #111 !important; }
+  .oral-sheet { font-size: 10pt; line-height: 1.5; }
+  .oral-formula { color: #111; background: #f4f5f0 !important; border-color: #aaa; overflow: visible; }
+  .oral-symbols dt, .oral-kicker { color: #333; }
+  .oral-details { break-inside: avoid; }
+  .oral-details summary > span:last-child { display: none; }
+  .oral-visual-controls { display: none; }
+  .oral-plain { background: #f1f3ed !important; }
+  .oral-plain > strong, .oral-plain p { color: #222; }
+  .oral-lesson-head h1 { font-size: 24pt; }
+  .oral-priority { color: #222 !important; background: white !important; }
+}
