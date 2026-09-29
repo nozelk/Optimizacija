@@ -232,12 +232,12 @@
       formula: t`G\text{ dvodelen}\quad\Longrightarrow\quad\mu(G)=\tau(G)`,
       symbols: [[t`\mu(G)`, "največje število povezav v prirejanju"], [t`\tau(G)`, "najmanjše število vozlišč v pokritju"]],
       solves: "Iz največjega prirejanja dobimo enako veliko pokritje in s tem dokaz optimalnosti. Pri madžarski metodi to pove, s koliko črtami lahko pokrijemo ničle.",
-      know: ["Za poljuben graf velja le μ ≤ τ. Enakost zahteva dvodelnost.", t`V trikotniku je \(\mu=1\), \(\tau=2\): izreka ne smemo uporabiti za vse grafe.`, t`Ničle matrike n × n tvorijo povezave dvodelnega grafa vrstic in stolpcev. Če ni n neodvisnih ničel, je \(\mu<n\), zato obstaja pokritje vseh ničel z \(\tau=\mu\le n-1\) vrsticami/stolpci.`],
+      know: ["Za poljuben graf lahko zagotovimo le μ ≤ τ. Izrek zagotavlja enakost za dvodelne grafe; pri drugih je enakost lahko izpolnjena ali pa ne.", t`V trikotniku je \(\mu=1\), \(\tau=2\): izreka ne smemo uporabiti za vse grafe.`, t`Ničle matrike n × n tvorijo povezave dvodelnega grafa vrstic in stolpcev. Če ni n neodvisnih ničel, je \(\mu<n\), zato obstaja pokritje vseh ničel z \(\tau=\mu\le n-1\) vrsticami/stolpci.`],
       proof: { title: "Kratek dokaz iz madžarske metode", steps: ["Izvedemo neuteženo madžarsko metodo do konca. Dobimo prirejanje M in pokritje P = (X ∖ S) ∪ T.", "Kot pri vprašanju 18 dokažemo, da P pokrije vse povezave in da |P| = |M|.", "Ker za vsako prirejanje in vsako pokritje velja |M| ≤ |P|, sta dobljena M in P optimalna; torej μ = τ."] },
       recall: "Na vprašanje »zakaj obstaja pokritje z največ n−1 črtami« odgovori z grafom ničel in tem izrekom."
     },
     {
-      id: "20", number: 20, title: "Madžarska metoda na omrežjih", group: "Prirejanja in madžarska metoda", priority: "core", asked: true, topic: "madzarska-utezi", sources: ["PPPP2.pdf", "PPPP3.pdf"],
+      id: "20", number: 20, title: "Madžarska metoda z matriko", official: "Madžarska metoda na omrežjih", group: "Prirejanja in madžarska metoda", priority: "core", asked: true, topic: "madzarska-utezi", sources: ["PPPP2.pdf", "PPPP3.pdf"],
       question: "Kaj rešuje utežena madžarska metoda? Zapiši problem, postopek in razlog za obstoj pokritja.",
       definition: "V polnem dvodelnem grafu Kₙ,ₙ s cenami cᵢⱼ iščemo najcenejše popolno prirejanje: vsakemu od n opravil dodelimo natanko enega od n izvajalcev.",
       formula: t`\min_{\pi\in S_n}\sum_{i=1}^n c_{i,\pi(i)}\qquad\begin{aligned}\text{oz. }\min\ &\sum_{i,j}c_{ij}x_{ij}\\\sum_jx_{ij}&=1\quad(\forall i),\\\sum_ix_{ij}&=1\quad(\forall j),\\x_{ij}&\in\{0,1\}.\end{aligned}`,
@@ -348,4 +348,11 @@
     26: "Poštar mora prehoditi vse ulice in se vrniti. Če se v vseh križiščih stika sodo ulic, gre skozi vsako enkrat. Sicer najceneje podvoji poti, ki popravijo liha križišča."
   };
   window.ORAL_DATA.forEach(item => { item.plain = plain[item.id]; });
+  const get = id => window.ORAL_DATA.find(item => item.id === id);
+  get("20").methodNote = 'To je običajna madžarska metoda z odštevanjem minimumov in pokrivanjem ničel. V uradnem seznamu se imenuje »Madžarska metoda na omrežjih«; v PDF-ju »za dvodelne grafe z utežmi«. Neutežena metoda iz <a href="#/vprasanje/18">vprašanja 18</a> je njen korak za iskanje neodvisnih ničel in njihovega pokritja.';
+  get("20").know.push(t`Če naloga išče največji dobiček z matriko A, uporabi stroške \(C=-A\) in minimiziraj. Algoritem ostane enak; končni dobiček preberi v prvotni A.`);
+  get("17").know.push(t`Popolno prirejanje ima \(|V|/2\) povezav, zato zahteva sodo število vozlišč. Sodo število samo še ne zagotovi obstoja. V \(K_{n,n}\) je popolnih prirejanj \(n!\).`);
+  get("16").know.push("Prirejanje opravil je poseben razvoz: ponudba in povpraševanje sta po 1. Zato pri pogojih, da so vrstične in stolpčne vsote 1, lahko xᵢⱼ ∈ {0,1} nadomestimo z xᵢⱼ ≥ 0 in še vedno obstaja celoštevilski optimum.");
+  get("2").know.push("Za lokalni maksimum obrnemo primerjave: izberemo soseda z večjo vrednostjo in končamo, ko takega ni.");
+  get("26").know.push("Pri pozitivnih cenah obstaja optimalen obhod, v katerem vsako povezavo prehodimo največ dvakrat. To v PDF-ju zagotovi tudi obstoj optimuma.");
 })();

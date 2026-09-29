@@ -77,6 +77,7 @@
       <nav class="oral-backbar" aria-label="Pot do vprašanja"><a href="#/teorija">← Vsa vprašanja</a><span>${e(item.group)}</span><span>${position + 1} / ${lessons.length}</span></nav>
       <header class="oral-lesson-head"><div class="oral-meta"><span class="oral-kicker">${item.number ? `VPRAŠANJE ${String(item.number).padStart(2, "0")}` : "OSNOVA / PREDEN ZAČNEŠ"}</span>${badge(item)}${item.asked ? '<span class="oral-asked">Že vprašano</span>' : ""}</div><h1>${e(item.title)}</h1><p class="oral-question">${e(item.question)}</p></header>
       <div class="oral-answer-layout"><article class="oral-sheet">
+        ${item.methodNote ? `<aside class="oral-method-note">${item.methodNote}</aside>` : ""}
         <section class="oral-definition"><h2><span>01</span> Definicija in zapis</h2><p>${item.definition}</p><div class="oral-formula">${math(item.formula)}</div>
           <dl class="oral-symbols">${item.symbols.map(([symbol, meaning]) => `<div${symbol.length > 45 ? ' class="oral-symbol-wide"' : ""}><dt>${inline(symbol)}</dt><dd>${e(meaning)}</dd></div>`).join("")}</dl>
           <p class="oral-solves"><strong>Kaj rešuje oziroma pove?</strong>${item.solves}</p>

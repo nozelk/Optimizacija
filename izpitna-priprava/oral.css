@@ -175,6 +175,55 @@ body:has(.oral-page) #view.view-enter { animation: none; }
 .oral-graph .flow-labels text { fill: #d3dfc8; font: 12px var(--mono); }
 .oral-graph .flow-balance text { fill: #d2e5b8; font: 13px var(--font); }
 .nav-secondary { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 12px; }
+.oral-method-note { border-left: 2px solid #99bb72; background: #1c2517; padding: 14px 18px; color: #c4d1b7; font-size: 12px; line-height: 1.85; margin: 0 0 28px; }
+.og-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin: 5px 0 20px; }
+.og-tabs button { border: 1px solid #3e4d32; border-radius: 6px; background: #171f12; color: #bac9ad; padding: 10px 14px; font: 11px var(--font); cursor: pointer; }
+.og-tabs button[aria-pressed="true"] { background: #314224; color: #e7f3d2; border-color: #9cbb75; }
+.og-tabs button:hover, .oral-visual-controls button:not(:disabled):hover { border-color: #bedb99; background: #34452a; }
+.og-tabs button:focus-visible, .oral-visual-controls button:focus-visible, .og-scroll:focus-visible { outline: 2px solid #d7e9b6; outline-offset: 3px; }
+.og-stage > h3 { margin: 15px 0; color: #e2eacb; font-size: 15px; font-weight: 550; }
+.og-scroll { width: 100%; overflow-x: auto; overscroll-behavior-x: contain; border: 1px solid #33402b; border-radius: 12px; background: #121a0f; scrollbar-color: #5c7148 #192115; }
+.og-svg { display: block; width: 100%; min-width: 530px; max-width: 780px; height: auto; margin: auto; }
+.og-edge { fill: none; stroke: #788872; stroke-width: 2.2; stroke-linecap: round; }
+.og-edge.active { stroke: #c5e597; stroke-width: 4; }
+.og-edge.accent { stroke: #f0b782; stroke-width: 3.5; }
+.og-edge.blue { stroke: #91bde5; stroke-width: 3.3; }
+.og-edge.muted { stroke: #66705e; stroke-width: 1.8; }
+.og-edge.dashed { stroke-dasharray: 7 6; }
+.og-edge-label rect { fill: #192313; stroke: #3c4a31; stroke-width: 1; }
+.og-edge-label text { fill: #dbe6d0; font: 12px var(--mono); }
+.og-edge-label.active rect { stroke: #819e61; }
+.og-edge-label.active text { fill: #e1f2c4; }
+.og-edge-label.accent rect { stroke: #b7885b; }
+.og-edge-label.accent text { fill: #f4caa5; }
+.og-edge-label.blue text { fill: #b8d9f5; }
+.og-node > circle { fill: #1e2b16; stroke: #a5b995; stroke-width: 1.7; }
+.og-node.active > circle { fill: #364d25; stroke: #c5e597; stroke-width: 2.5; }
+.og-node.accent > circle { fill: #553b23; stroke: #f0b782; stroke-width: 2.5; }
+.og-node > .og-halo { fill: #c5e597; stroke: none; opacity: .07; }
+.og-node.accent > .og-halo { fill: #f0b782; }
+.og-node-name { fill: #f1f5e7; font: 16px var(--mono); font-weight: 600; }
+.og-node-note { fill: #bac9a9; font: 12px var(--font); paint-order: stroke; stroke: #121a0f; stroke-width: 4px; stroke-linejoin: round; }
+.og-group { fill: #25321d; fill-opacity: .45; stroke: #46573a; stroke-dasharray: 3 5; }
+.og-group-name { fill: #b5cba0; font: 13px var(--mono); }
+.og-cut-area { fill: #624324; fill-opacity: .25; }
+.og-cut-line { fill: none; stroke: #f0b782; stroke-dasharray: 5 6; opacity: .7; }
+.og-reading { font-size: 10px !important; line-height: 1.7; color: #a8b99a; margin: 12px 0 !important; }
+.og-explanation { font-size: 12px; line-height: 1.9; color: #c8d3bd; }
+.og-mobile-hint { display: none; color: #a8b99a; font-size: 10px; }
+.og-table { width: 100%; min-width: 280px; border-collapse: collapse; font: 12px var(--mono); text-align: center; }
+.og-table th, .og-table td { padding: 12px 10px; border: 1px solid #34422b; }
+.og-table th { font-weight: 400; color: #b0c29c; background: #1e2918; }
+.og-table td { background: #151e11; color: #d2dfc4; }
+.og-table .og-changed { color: #f7c695; background: #38291b; font-weight: 650; }
+.review-visual-stage { overflow-x: auto; overscroll-behavior-x: contain; }
+.review-visual-stage svg { min-width: 520px; }
+@media (max-width: 700px) {
+  .og-mobile-hint { display: block; }
+  .og-tabs button { padding: 10px; font-size: 10px; }
+  .og-stage > h3 { font-size: 14px; }
+  .oral-method-note { padding: 12px 14px; }
+}
 .nav-label { color: var(--muted); font: 9px var(--mono); letter-spacing: .12em; margin: 8px 12px; }
 @media (max-width: 1180px) {
   .oral-layout { grid-template-columns: minmax(0, 1fr); }

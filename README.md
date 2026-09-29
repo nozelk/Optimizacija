@@ -6,9 +6,12 @@ Priprava na ustni izpit: vseh 26 vprašanj in uvodni list o linearnem programu.
 Vsak list vsebuje matematični zapis, pomen oznak, razlago po domače, ključne
 lastnosti in kratek dokaz. Prioritete so predlog vrstnega reda učenja.
 
-Interaktivni prikazi sledijo priloženim zapiskom: madžarska metoda na matriki
-plavalcev, povečujoča pot in pokritje, problem razvoza, igra Blotto ter proizvodni
-problem kmeta. Dodatno so ohranjene podrobne razlage, kartice, kviz in izpit.
+Madžarska metoda ima osnovni primer 3 × 3 in matriko plavalcev 6 × 6 iz PDF-ja.
+Interaktivni grafi prikazujejo prirejanje in pokritje, razvoz in omrežni simpleks,
+pretok z residualnim grafom, Dijkstro in Floyd–Warshallovo matriko, vzajemno
+vidnost, poštarjev obhod in 2-opt. Izvirni primeri iz zapiskov in manjši učni
+primeri istega postopka so posebej označeni. Ohranjeni so tudi igra Blotto,
+proizvodni problem kmeta, podrobne razlage, kartice, kviz in izpit.
 Napredek se shrani lokalno v brskalniku.
 
 ## Lokalni zagon

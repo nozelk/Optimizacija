@@ -54,7 +54,13 @@ with tempfile.TemporaryDirectory(prefix="opt-oral-qa-") as profile:
                 screenshot(f"lesson-{lesson}-desktop")
         checks.append("all 27 routes render math, proofs and source links")
 
-        go("vprasanje/20", '[data-visual="hungarian"]')
+        go("vprasanje/20", '[data-visual="small"]')
+        for _ in range(6):
+            click('[data-visual="small"] [aria-label="Naslednji korak prikaza"]')
+        assert len(driver.find_elements(By.CSS_SELECTOR, ".chosen-cell")) == 3
+        assert "1+2+2=5" in driver.find_element(By.CSS_SELECTOR, ".oral-visual-stage").text.replace(" ", "").replace("\n", "")
+        screenshot("hungarian-small-desktop")
+        click('[data-matrix-tab="hungarian"]')
         for step in range(6):
             click('[data-visual="hungarian"] [aria-label="Naslednji korak prikaza"]')
             if step == 2:
@@ -64,12 +70,31 @@ with tempfile.TemporaryDirectory(prefix="opt-oral-qa-") as profile:
         assert "254" in driver.find_element(By.CSS_SELECTOR, ".oral-visual-stage").text
         click('[data-visual="hungarian"] [aria-label="Prejšnji korak prikaza"]')
         assert "Šest neodvisnih" in driver.find_element(By.CSS_SELECTOR, ".oral-visual-stage h3").text
-        go("vprasanje/18", '[data-visual="matching"]')
+        go("vprasanje/18", '[data-graph="matching"]')
         for _ in range(3):
-            click('[data-visual="matching"] [aria-label="Naslednji korak prikaza"]')
-        assert len(driver.find_elements(By.CSS_SELECTOR, ".cover-node")) == 2
+            click('[data-graph="matching"] .oral-visual-controls button:last-child')
+        assert len(driver.find_elements(By.CSS_SELECTOR, ".og-node.accent")) == 2
         screenshot("matching-cover-desktop")
         checks.append("PDF matrix: all 7 stages, 5-line cover, 6 assignments, 254 seconds; matching diagram")
+
+        for lesson, kind, steps in [("2","local",2),("14","transport",3),("15","simplex",4),("22","maxflow",6),("24","dijkstra",5),("25","visibility",3),("26","postman",4)]:
+            go(f"vprasanje/{lesson}", f'[data-graph="{kind}"]')
+            for step in range(steps):
+                assert len(driver.find_elements(By.CSS_SELECTOR, ".og-svg")) == 1
+                assert not driver.find_elements(By.CSS_SELECTOR, ".katex-error")
+                assert driver.execute_script("return document.documentElement.scrollWidth <= innerWidth + 1")
+                if step == steps - 1:
+                    driver.execute_script("document.querySelector('.og-stage').scrollIntoView({block:'center',behavior:'instant'})")
+                    screenshot(f"graph-{kind}-desktop")
+                else:
+                    click(f'[data-graph="{kind}"] .oral-visual-controls button:last-child')
+            if kind == "dijkstra":
+                click('[data-graph-tab="floyd"]')
+                for _ in range(4):
+                    click('[data-graph="floyd"] .oral-visual-controls button:last-child')
+                assert len(driver.find_elements(By.CSS_SELECTOR, ".og-table td")) == 16
+                screenshot("graph-floyd-desktop")
+        checks.append("all graph algorithms: steps, SVG, Floyd switch, computed matrices")
 
         go("vprasanje/8", '[data-lesson-id="8"]')
         click(".oral-proof summary")
@@ -111,16 +136,20 @@ with tempfile.TemporaryDirectory(prefix="opt-oral-qa-") as profile:
                 click('.main-nav a[data-route="osnova"]')
                 wait.until(lambda d: d.find_elements(By.CSS_SELECTOR, '[data-lesson-id="lp"]'))
                 assert "open" not in driver.find_element(By.ID, "sidebar").get_attribute("class")
-            for lesson in ["lp", "8", "14", "20", "25"]:
+            for lesson in ["lp", "8", "14", "15", "18", "20", "22", "24", "25", "26"]:
                 go(f"vprasanje/{lesson}", f'[data-lesson-id="{lesson}"]')
                 assert driver.execute_script("return document.documentElement.scrollWidth <= innerWidth + 1"), (width, lesson)
                 assert not driver.find_elements(By.CSS_SELECTOR, ".katex-error,.math-fallback")
                 if width == 390 and lesson in ["lp", "20"]:
                     screenshot(f"lesson-{lesson}-mobile")
                 if width == 390 and lesson == "20":
-                    click('[data-visual="hungarian"] [aria-label="Naslednji korak prikaza"]')
+                    click('[data-visual="small"] [aria-label="Naslednji korak prikaza"]')
                     driver.execute_script("document.querySelector('.oral-visual-controls').scrollIntoView({block:'start',behavior:'instant'});")
                     screenshot("hungarian-mobile")
+                if width == 390 and lesson in ["14", "18", "22", "24", "26"]:
+                    driver.execute_script("document.querySelector('.og-stage').scrollIntoView({block:'start',behavior:'instant'})")
+                    screenshot(f"graph-{lesson}-mobile")
+                    assert driver.execute_script("const e=document.querySelector('.og-scroll');e.scrollLeft=100;return e.scrollLeft>0")
         checks.append("390px and 320px layouts, mobile menu")
         errors = [log for log in driver.get_log("browser") if log["level"] == "SEVERE"]
         assert not errors, errors

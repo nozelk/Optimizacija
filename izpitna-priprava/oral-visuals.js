@@ -17,6 +17,10 @@
   const blotto = [[4,2,1,0],[1,3,0,-1],[-2,2,2,-2],[-1,0,3,1],[0,1,2,4]];
 
   function table(matrix, columns, options = {}) {
+    const coveredRows = options.coverRows || [0];
+    const coveredCols = options.coverCols || [1,3,4,5];
+    const assignment = options.assignment || [0,2,3,4,1,5];
+    const coverCount = (i,j) => Number(coveredRows.includes(i)) + Number(coveredCols.includes(j));
     return `<div class="oral-table-scroll" tabindex="0" role="region" aria-label="${esc(options.caption || "Matrika")}"><table class="oral-matrix"><caption>${esc(options.caption || "Matrika")}</caption><thead><tr><th scope="col">${options.corner || ""}</th>${columns.map((name,j) => `<th scope="col" class="${options.cover && coveredCols.includes(j) ? "covered-label" : ""}">${esc(name)}</th>`).join("")}</tr></thead><tbody>${matrix.map((row,i) => `<tr><th scope="row" class="${options.cover && coveredRows.includes(i) ? "covered-label" : ""}">${esc(options.rows?.[i] || `p${i+1}`)}</th>${row.map((value,j) => {
       const cover = options.cover ? coverCount(i,j) : -1;
       const selected = options.selected && assignment[i] === j;
@@ -38,6 +42,31 @@
 
   function controls(kind, step, total) {
     return `<div class="oral-visual-controls"><button type="button" data-visual-kind="${kind}" data-visual-step="${step-1}" ${step === 0 ? "disabled" : ""} aria-label="Prejšnji korak prikaza">← Prejšnji</button><span>Korak ${step+1} / ${total}</span><button type="button" data-visual-kind="${kind}" data-visual-step="${step+1}" ${step === total-1 ? "disabled" : ""} aria-label="Naslednji korak prikaza">Naslednji →</button></div>`;
+  }
+
+  const smallOriginal = [[4,1,3],[2,0,5],[3,2,2]];
+  const smallRows = [[3,0,2],[2,0,5],[1,0,0]];
+  const smallReduced = [[2,0,2],[1,0,5],[0,0,0]];
+  const smallAdjusted = [[1,0,1],[0,0,4],[0,1,0]];
+  const smallAssignment = [1,0,2];
+  const smallSteps = [
+    {title:"Tri osebe, tri opravila",matrix:smallOriginal,text:"Število pove ceno, če osebi iz vrstice dodelimo opravilo iz stolpca. Vsaka oseba dobi natanko eno opravilo in vsako opravilo natanko eno osebo. Iščemo najmanjšo skupno ceno.",math:t`\min_{\pi\in S_3}\bigl(c_{1,\pi(1)}+c_{2,\pi(2)}+c_{3,\pi(3)}\bigr)`},
+    {title:"1a · Odštej minimum vsake vrstice",matrix:smallRows,text:"V prvi vrstici odštejemo 1, v drugi 0, v tretji 2. Zdaj ima vsaka vrstica ničlo. Vsaka dodelitev se poceni za isto število 1 + 0 + 2, zato se najboljša izbira ne spremeni.",math:t`r=(1,0,2),\qquad c'_{ij}=c_{ij}-r_i`},
+    {title:"1b · Odštej minimum vsakega stolpca",matrix:smallReduced,text:"Minimumi stolpcev so 1, 0, 0. Odštejemo jih. Ničle so kandidati za izbiro, a tri neodvisne ničle še ne obstajajo: prvi dve vrstici imata ničlo samo v drugem stolpcu.",math:t`s=(1,0,0),\qquad c''_{ij}=c'_{ij}-s_j`},
+    {title:"2 · Pokrij vse ničle z najmanj črtami",matrix:smallReduced,cover:true,text:"Zadoščata tretja vrstica in drugi stolpec. Ena črta ne bi zadoščala, zato je to najmanjše pokritje. Imamo 2 črti, potrebujemo pa 3 neodvisne ničle. Najmanjši nepokriti element je ε = 1.",math:t`|P|=2<3,\qquad\varepsilon=\min\{2,2,1,5\}=1`},
+    {title:"3 · Popravi nepokrita in dvakrat pokrita polja",matrix:smallAdjusted,cover:true,text:"Nepokritim poljem odštejemo 1. Na presečišču obeh črt prištejemo 1. Enkrat pokrita polja pustimo. Zdaj lahko izberemo tri neodvisne ničle; če jih še ne bi mogli, bi ponovno našli pokritje in ponovili popravek.",math:t`\widetilde c_{ij}=\begin{cases}c''_{ij}-1&\text{nepokrit},\\c''_{ij}&\text{enkrat pokrit},\\c''_{ij}+1&\text{dvakrat pokrit}.\end{cases}`},
+    {title:"4 · Izberi po eno ničlo v vsaki vrstici in stolpcu",matrix:smallAdjusted,selected:true,text:"Oseba A dobi opravilo 2, B opravilo 1, C opravilo 3. Izbrane ničle nimajo skupne vrstice ali stolpca: to je popolno prirejanje v grafu ničel.",math:t`\pi=(2,1,3),\qquad x_{12}=x_{21}=x_{33}=1`},
+    {title:"5 · Seštej cene v prvotni matriki",matrix:smallOriginal,selected:true,text:"Vrnemo se na prvotne cene: A → 2 stane 1, B → 1 stane 2 in C → 3 stane 2. Najmanjša skupna cena je 5. Ničle v popravljeni matriki ne pomenijo, da je prvotna dodelitev brezplačna.",math:t`\mathrm{OPT}=c_{12}+c_{21}+c_{33}=1+2+2=5`}
+  ];
+
+  function smallHungarian(step=0) {
+    const s=smallSteps[step];
+    return `${controls("small",step,smallSteps.length)}<div class="oral-visual-stage" aria-live="polite"><h3>${s.title}</h3>${table(s.matrix,["opravilo 1","opravilo 2","opravilo 3"],{caption:s.title,corner:"oseba",rows:["A","B","C"],cover:s.cover,selected:s.selected,coverRows:[2],coverCols:[1],assignment:smallAssignment})}${s.cover?'<div class="oral-matrix-legend"><span class="uncovered-key">Nepokrito: −1</span><span>Enkrat pokrito: isto</span><span class="double-key">Dvakrat pokrito: +1</span></div>':""}<div class="oral-visual-equation">${tex(s.math,true)}</div><p>${s.text}</p></div>`;
+  }
+
+  function matrixExample(kind) {
+    const small=kind==="small";
+    return `<p class="oral-visual-source">${small?'Majhen učni primer postopka iz <a href="../PPPP2.pdf" target="_blank" rel="noopener">PPPP2.pdf, poglavje 5.3 ↗</a>.':'Matrika plavalcev in izbira sta iz <a href="../PPPP3.pdf" target="_blank" rel="noopener">PPPP3.pdf, str. 1–3 ↗</a>.'}</p><div class="oral-visual-body" data-visual="${kind}">${small?smallHungarian():hungarian()}</div>`;
   }
 
   function hungarian(step = 0) {
@@ -74,6 +103,8 @@
   }
 
   function render(id) {
+    if (window.OralGraphs?.configs[id]) return window.OralGraphs.render(id);
+    if (id === "20") return `<details class="oral-details oral-visual-details oral-hungarian" open><summary><span><small>NAVADNA MADŽARSKA METODA</small>Matrika: od cen do optimalne dodelitve</span><span aria-hidden="true">+</span></summary><div><div class="og-tabs" role="group" aria-label="Izberi primer matrike"><button type="button" data-matrix-tab="small" aria-pressed="true">Osnova · 3 × 3</button><button type="button" data-matrix-tab="hungarian" aria-pressed="false">Primer iz PDF-ja · 6 × 6</button></div><div class="oral-matrix-example">${matrixExample("small")}</div></div></details>`;
     let body, title, source, pages, open = false, kind;
     if (id === "20") { body = hungarian(); title = "Matrika iz PDF-ja, korak za korakom"; source = "PPPP3.pdf"; pages = "str. 1–3"; open = true; kind = "hungarian"; }
     else if (["17","18","19"].includes(id)) { body = matching(); title = "Narišimo prirejanje in pokritje"; source = "PPPP2.pdf"; pages = "str. 2–6"; open = id === "18"; kind = "matching"; }
@@ -84,18 +115,25 @@
     return `<details class="oral-details oral-visual-details" ${open ? "open" : ""}><summary><span><small>PRIMER IZ TVOJIH ZAPISKOV</small>${title}</span><span aria-hidden="true">+</span></summary><div><p class="oral-visual-source"><a href="../${encodeURI(source)}" target="_blank" rel="noopener">${source} · ${pages} ↗</a></p><div class="oral-visual-body" ${kind ? `data-visual="${kind}"` : ""}>${body}</div></div></details>`;
   }
   document.querySelector("#view").addEventListener("click", event => {
+    const tab=event.target.closest("[data-matrix-tab]");
+    if(tab) {
+      const detail=tab.closest(".oral-hungarian");
+      detail.querySelectorAll("[data-matrix-tab]").forEach(b=>b.setAttribute("aria-pressed",String(b===tab)));
+      detail.querySelector(".oral-matrix-example").innerHTML=matrixExample(tab.dataset.matrixTab);
+      return;
+    }
     const button = event.target.closest("[data-visual-step]");
     if (!button) return;
     const kind = button.dataset.visualKind;
     const step = Number(button.dataset.visualStep);
-    const stages = kind === "hungarian" ? hungarianSteps : graphSteps;
+    const stages = kind === "hungarian" ? hungarianSteps : kind === "small" ? smallSteps : graphSteps;
     if (step < 0 || step >= stages.length) return;
     const root = button.closest(".oral-visual-body");
     const direction = button.textContent.includes("Naslednji") ? "next" : "prev";
-    root.innerHTML = kind === "hungarian" ? hungarian(step) : matching(step);
+    root.innerHTML = kind === "hungarian" ? hungarian(step) : kind === "small" ? smallHungarian(step) : matching(step);
     const buttons = root.querySelectorAll(".oral-visual-controls button");
     const intended = buttons[direction === "next" ? 1 : 0];
     (intended.disabled ? buttons[direction === "next" ? 0 : 1] : intended).focus({ preventScroll: true });
   });
-  window.OralVisuals = { render, original, reduced, adjusted, assignment, cost, epsilon, edges, hungarianSteps, graphSteps, hungarian, matching };
+  window.OralVisuals = { render, original, reduced, adjusted, assignment, cost, epsilon, edges, hungarianSteps, graphSteps, hungarian, matching, smallOriginal, smallReduced, smallAdjusted, smallAssignment, smallSteps, smallHungarian };
 })();

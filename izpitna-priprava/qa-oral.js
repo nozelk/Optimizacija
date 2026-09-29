@@ -41,6 +41,7 @@ assert(lessons.find(item => item.id === "20").know.some(text => text.includes("K
 global.katex = katex;
 global.document = { querySelector: () => ({ addEventListener() {} }) };
 require("./oral-visuals.js");
+require("./oral-graphs.js");
 const visuals = global.OralVisuals;
 assert.equal(visuals.epsilon, 2);
 assert.equal(visuals.cost, 254);
@@ -66,4 +67,37 @@ assert(visuals.edges.every(([i,j]) => cover.includes(`x${i}`) || cover.includes(
 for (const item of lessons) visuals.render(item.id);
 visuals.hungarianSteps.forEach((_,i) => visuals.hungarian(i));
 visuals.graphSteps.forEach((_,i) => visuals.matching(i));
+// Independently enumerate the small assignment problem and check its certificate.
+const smallPermutations = [[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]];
+assert.equal(Math.min(...smallPermutations.map(p=>p.reduce((s,j,i)=>s+visuals.smallOriginal[i][j],0))),5);
+assert(!smallPermutations.some(p=>p.every((j,i)=>visuals.smallReduced[i][j]===0)));
+visuals.smallAssignment.forEach((j,i)=>assert.equal(visuals.smallAdjusted[i][j],0));
+visuals.smallSteps.forEach((s,i)=>{check(s.math,"Small Hungarian step");visuals.smallHungarian(i);});
+const graphs = global.OralGraphs;
+let graphStages=0;
+for(const [kind,make] of Object.entries(graphs.series)) {
+  make().forEach((stage,i)=>{
+    check(stage.formula,`${kind} step ${i}`);
+    const ids=new Set(stage.graph.nodes.map(n=>n.id));
+    stage.graph.edges.forEach(e=>{assert(ids.has(e.from)&&ids.has(e.to));assert.notEqual(e.from,e.to);});
+    assert(!graphs.body(kind,i).includes("NaN"));
+    graphStages++;
+  });
+}
+for(const stage of graphs.series.maxflow()) {
+  const net={s:0,a:0,b:0,t:0};
+  stage.flow.forEach((f,i)=>{
+    assert(f>=0&&f<=graphs.capacities[i]);
+    const [u,v]=graphs.flowPairs[i];net[u]-=f;net[v]+=f;
+  });
+  assert.equal(net.a,0);assert.equal(net.b,0);assert.equal(net.s+net.t,0);
+}
+assert.deepEqual(graphs.series.floyd().at(-1).matrix,[[0,3,1,4],[Infinity,0,Infinity,1],[Infinity,2,0,3],[Infinity,Infinity,Infinity,0]]);
+// Cost and balance certificates for the displayed network pivot.
+for(const x of [[3,4,0,0],[0,7,3,0]]) {
+  assert.deepEqual([-x[0]-x[1],x[0]+x[2]-x[3],x[1]-x[2]+x[3]],[-7,3,4]);
+}
+assert.equal([0,7,3,0].reduce((s,x,i)=>s+x*[3,1,1,6][i],0),10);
+assert([3,1,1,6].every((c,i)=>c+([0,0,1,2][i])-([2,1,2,1][i])>=0));
+console.log(`Graph stages checked: ${graphStages}; small Hungarian optimum: 5; network optimum: 10; maximum flow: 5.`);
 console.log(JSON.stringify({ lessons: lessons.length, officialQuestions: lessons.filter(item => item.number).length, validatedFormulas: formulas, hungarianCost: visuals.cost, checkedAssignments: assignments.length, errors: 0 }, null, 2));
